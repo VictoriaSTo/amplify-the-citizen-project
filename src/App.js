@@ -18,6 +18,20 @@ import {
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
 
+// import { DataStore } from '@aws-amplify/datastore';
+// import { Note } from './models';
+// await DataStore.save(
+//   new Note({
+//   "name": "Lorem ipsum dolor sit amet",
+//   "description": "Lorem ipsum dolor sit amet",
+//   "image": "Lorem ipsum dolor sit amet"
+// })
+// );
+
+// UI components
+import { 
+  NavBar 
+} from './ui-components';
 
 
 const App = ({ signOut }) => {
@@ -72,7 +86,8 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1}>My Notes App</Heading>
+      <NavBar />
+      <Heading level={1}>The Citizen Advocates</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <TextField
