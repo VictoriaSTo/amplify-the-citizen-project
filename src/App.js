@@ -18,8 +18,8 @@ import {
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
 
-// import { DataStore } from '@aws-amplify/datastore';
-// import { Note } from './models';
+import { DataStore } from '@aws-amplify/datastore';
+import { Note } from './models';
 // await DataStore.save(
 //   new Note({
 //   "name": "Lorem ipsum dolor sit amet",
@@ -42,18 +42,20 @@ const App = ({ signOut }) => {
   }, []);
 
   async function fetchNotes() {
-    const apiData = await API.graphql({ query: listNotes });
-    const notesFromAPI = apiData.data.listNotes.items;
-    await Promise.all(
-      notesFromAPI.map(async (note) => {
-        if (note.image) {
-          const url = await Storage.get(note.name);
-          note.image = url;
-        }
-        return note;
-      })
-    );
-    setNotes(notesFromAPI);
+    // const apiData = await API.graphql({ query: listNotes });
+    // const notesFromAPI = apiData.data.listNotes.items;
+    // await Promise.all(
+    //   notesFromAPI.map(async (note) => {
+    //     if (note.image) {
+    //       const url = await Storage.get(note.name);
+    //       note.image = url;
+    //     }
+    //     return note;
+    //   })
+    // );
+    // setNotes(notesFromAPI);
+    const notes = await DataStore.query(Note);
+    console.log(notes);
   }
 
   async function createNote(event) {
@@ -88,7 +90,7 @@ const App = ({ signOut }) => {
     <View className="App">
       <NavBar />
       <Heading level={1}>The Citizen Advocates</Heading>
-      <View as="form" margin="3rem 0" onSubmit={createNote}>
+      {/* <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <TextField
             name="name"
@@ -142,7 +144,7 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       ))}
-      </View>
+      </View> */}
       <Button onClick={signOut}>Sign Out</Button>
     </View>
   );
